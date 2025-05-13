@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ScrollerCard from "@/components/home/ScrollerCard";
-import { getCarosuelCategories, getCarosuelItems } from "@/actions/home";
+import { getCarouselCategories, getCarouselItems } from "@/actions/home";
 import { MealItem } from "../../types/type";
 
 const ItemCarosuel: React.FC = () => {
@@ -23,7 +23,7 @@ const ItemCarosuel: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const categoriesData = await getCarosuelCategories();
+        const categoriesData = await getCarouselCategories();
         setCategories(categoriesData);
         setSelectedCategory(categoriesData[0] || "");
         setIsLoadingCategories(false);
@@ -41,7 +41,7 @@ const ItemCarosuel: React.FC = () => {
       const fetchItems = async () => {
         setIsLoadingItems(true);
         try {
-          const itemsData = await getCarosuelItems(selectedCategory);
+          const itemsData = await getCarouselItems(selectedCategory);
           setFilteredItems(itemsData);
         } catch (err) {
           setError("Failed to fetch items.");
