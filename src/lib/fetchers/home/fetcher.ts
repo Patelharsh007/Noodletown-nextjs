@@ -2,86 +2,106 @@ const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 // --------------------------- Home Page -----------------------------------------------
 
-//--------Best delievered--------------------
-
+// --------Best Delivered--------------------
 export const fetchBestDelivered = async () => {
-  const res = await fetch(`${BASE_URL}/meal/weatherMeals`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "force-cache",
-  });
-
-  if (!res.ok) {
-    throw new Error(`Network error: ${res.status}`);
-  }
-
-  const response = await res.json();
-
-  if (response.status !== "success") {
-    console.error("Error in response: ", response);
-    throw new Error(response.message || "Unknown error from API");
-  }
-
-  return response.meals.slice(0, 3);
-};
-
-//--------Carousel categories--------------------
-
-export const fetchCarosuelCategories = async () => {
-  const res = await fetch(`${BASE_URL}/meal/categories`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "force-cache",
-    next: {
-      tags: ["categories"],
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`Network error: ${res.status}`);
-  }
-
-  const response = await res.json();
-
-  if (response.status !== "success") {
-    console.error("Error in response:", response);
-    throw new Error(response.message || "Failed to fetch categories");
-  }
-
-  return response.categories;
-};
-
-//--------Carousel items--------------------
-export const fetchCarosuelItems = async (category: string) => {
-  if (!category) return [];
-
-  const res = await fetch(
-    `${BASE_URL}/meal/carosuelItems?category=${category}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  try {
+    const res = await fetch(`${BASE_URL}/meal/weatherMeals`, {
       cache: "force-cache",
+      signal: AbortSignal.timeout(5000),
+    });
+
+    if (!res.ok) {
+      console.error(
+        `fetchBestDelivered failed: HTTP ${res.status} - ${res.statusText}`
+      );
+      return [];
     }
-  );
 
-  if (!res.ok) {
-    throw new Error(`Network error: ${res.status}`);
+    const response = await res.json();
+
+    if (response.status !== "success") {
+      console.error(
+        "fetchBestDelivered response error:",
+        response.message || "Unknown error"
+      );
+      return [];
+    }
+
+    return (response.meals || []).slice(0, 3);
+  } catch (error) {
+    console.error("fetchBestDelivered error:", error);
+    return [];
   }
-
-  const response = await res.json();
-
-  if (response.status !== "success") {
-    console.error("Error in response:", response);
-    throw new Error(response.message || "Failed to fetch carousel items");
-  }
-
-  return response.carosuelItem;
 };
 
-// ---------------------------Menu Page-----------------------------------------------
+// --------Carousel Categories--------------------
+export const fetchCarosuelCategories = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/meal/categories`, {
+      cache: "force-cache",
+      signal: AbortSignal.timeout(5000),
+    });
+
+    if (!res.ok) {
+      console.error(
+        `fetchCarosuelCategories failed: HTTP ${res.status} - ${res.statusText}`
+      );
+      return [];
+    }
+
+    const response = await res.json();
+
+    if (response.status !== "success") {
+      console.error(
+        "fetchCarosuelCategories response error:",
+        response.message || "Unknown error"
+      );
+      return [];
+    }
+
+    return response.categories || [];
+  } catch (error) {
+    console.error("fetchCarosuelCategories error:", error);
+    return [];
+  }
+};
+
+// --------Carousel Items--------------------
+export const fetchCarosuelItems = async (category: string) => {
+  if (!category) {
+    console.warn("fetchCarosuelItems: No category provided");
+    return [];
+  }
+
+  try {
+    const res = await fetch(
+      `${BASE_URL}/meal/carosuelItems?category=${category}`,
+      {
+        cache: "force-cache",
+        signal: AbortSignal.timeout(5000),
+      }
+    );
+
+    if (!res.ok) {
+      console.error(
+        `fetchCarosuelItems failed: HTTP ${res.status} - ${res.statusText}`
+      );
+      return [];
+    }
+
+    const response = await res.json();
+
+    if (response.status !== "success") {
+      console.error(
+        "fetchCarosuelItems response error:",
+        response.message || "Unknown error"
+      );
+      return [];
+    }
+
+    return response.carosuelItem || [];
+  } catch (error) {
+    console.error("fetchCarosuelItems error:", error);
+    return [];
+  }
+};

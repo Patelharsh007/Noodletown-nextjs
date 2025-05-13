@@ -1,40 +1,36 @@
 "use server";
-
 import {
   fetchBestDelivered,
   fetchCarosuelCategories,
   fetchCarosuelItems,
 } from "@/lib/fetchers/home/fetcher";
 
-// Get best delivered meals
 export async function getBestDeliveredMeals() {
   try {
-    return await fetchBestDelivered();
+    const meals = await fetchBestDelivered();
+    return meals;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to fetch meals");
-    }
+    console.error("getBestDeliveredMeals error:", error);
+    return [];
   }
 }
 
-// Get carousel categories
-export async function getCarosuelCategories() {
+export async function getCarouselCategories() {
   try {
-    return await fetchCarosuelCategories();
+    const categories = await fetchCarosuelCategories();
+    return categories;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to fetch carousel categories");
-    }
+    console.error("getCarouselCategories error:", error);
+    return [];
   }
 }
 
-// Get carousel items for a given category
-export async function getCarosuelItems(category: string) {
+export async function getCarouselItems(category: string) {
   try {
-    return await fetchCarosuelItems(category);
+    const items = await fetchCarosuelItems(category);
+    return items;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to fetch carousel items");
-    }
+    console.error("getCarouselItems error:", error);
+    return [];
   }
 }
