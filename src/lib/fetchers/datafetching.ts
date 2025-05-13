@@ -1,5 +1,6 @@
 import { AddressItem } from "@/types/type";
 import { axiosInstance } from "./axiosInstance";
+import next from "next";
 
 //-----------+------------Menu Page----------------------------
 
@@ -51,21 +52,6 @@ export const fetchMenu = async (id: string, category: string) => {
 export const fetchBestDelievered = async () => {
   const response = await axiosInstance.get(`/meal/weatherMeals`);
   return response.data.meals.slice(0, 3);
-};
-
-export const fetchCarosuelCategories = async () => {
-  const response = await axiosInstance.get(`/meal/categories`);
-  return response.data.categories;
-};
-
-export const fetchCarosuelItems = async (category: string) => {
-  if (!category) {
-    return;
-  }
-  const response = await axiosInstance.get(
-    `/meal/carosuelItems?category=${category}`
-  );
-  return response.data.carosuelItem;
 };
 
 //search values

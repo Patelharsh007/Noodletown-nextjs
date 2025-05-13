@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins, Inter } from "next/font/google";
-import ReactQueryProvider from "@/lib/ReactQueryProvider";
+import ReactQueryProvider from "@/lib/utils/ReactQueryProvider";
+import ReduxProvider from "@/lib/utils/ReduxProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${inter.variable} antialiased`}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>]
+        <ReduxProvider>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
