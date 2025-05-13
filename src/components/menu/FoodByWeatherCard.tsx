@@ -1,4 +1,4 @@
-import { Grid as Grid2, Box, Stack, Typography } from "@mui/material";
+import { Grid, Box, Stack, Typography } from "@mui/material";
 import React from "react";
 import Link from "next/link";
 import { MealItem } from "@/types/type";
@@ -9,7 +9,7 @@ interface foodByWeatherCardProp {
 
 const FoodByWeatherCard: React.FC<foodByWeatherCardProp> = ({ Card }) => {
   return (
-    <Grid2 size={{ xs: 6, sm: 4 }}>
+    <Grid size={{ xs: 6, sm: 4 }}>
       <Link href={`/product/${Card.id}`}>
         <Box
           component={"img"}
@@ -46,7 +46,7 @@ const FoodByWeatherCard: React.FC<foodByWeatherCardProp> = ({ Card }) => {
           {Card.short_description}
         </Typography>
       </Stack>
-    </Grid2>
+    </Grid>
   );
 };
 

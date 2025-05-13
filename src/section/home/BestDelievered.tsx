@@ -1,5 +1,4 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
 import BestDelieveredBox from "@/components/home/BestDelieveredBox";
 import BestDeliveredSkeleton from "../../skeleton/BestDeliveredSkeleton";
 import { getBestDeliveredMeals } from "@/actions/home";

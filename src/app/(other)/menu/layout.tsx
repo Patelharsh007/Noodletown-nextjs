@@ -11,10 +11,10 @@ export default function MenuLayout({
   return (
     <div>
       <main>
-        {children}
         <section>
           <>{topbrands}</>
           <>{foodbyweather}</>
+          <>{children}</>
         </section>
       </main>
     </div>

@@ -1,4 +1,4 @@
-import { Box, Grid as Grid2, Link, Typography } from "@mui/material";
+import { Box, Grid, Link, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import React from "react";
 
@@ -11,7 +11,7 @@ const InstagramBox: React.FC = () => {
         margin={"50px auto"}
         padding={{ xs: "25px", sm: "30px" }}
       >
-        <Grid2
+        <Grid
           container
           spacing={2}
           position={"relative"}
@@ -28,7 +28,7 @@ const InstagramBox: React.FC = () => {
             },
           }}
         >
-          <Grid2 size={{ xs: 6, sm: 4 }}>
+          <Grid size={{ xs: 6, sm: 4 }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031435/gridInstaImg6_gsylxg.jpg`}
@@ -36,8 +36,8 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 4 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 4 }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031431/gridInstaImg4_ymb0ur.jpg`}
@@ -45,8 +45,8 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 4 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 4 }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031434/gridInstaImg1_zecyns.jpg`}
@@ -54,8 +54,8 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 4 }} display={{ xs: "none", sm: "block" }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 4 }} display={{ xs: "none", sm: "block" }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031429/gridInstaImg3_rcgbmh.jpg`}
@@ -63,8 +63,8 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 4 }} display={{ xs: "none", sm: "block" }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 4 }} display={{ xs: "none", sm: "block" }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031434/gridInstaImg1_zecyns.jpg`}
@@ -72,8 +72,8 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
-          <Grid2 size={{ xs: 6, sm: 4 }}>
+          </Grid>
+          <Grid size={{ xs: 6, sm: 4 }}>
             <Box
               component={"img"}
               src={`https://res.cloudinary.com/drqniwnnq/image/upload/v1747031435/gridInstaImg6_gsylxg.jpg`}
@@ -81,7 +81,7 @@ const InstagramBox: React.FC = () => {
               height={{ xs: "180px", sm: "240px", lg: "325px" }}
               width={"100%"}
             />
-          </Grid2>
+          </Grid>
 
           {/* Instagram Overlay Box */}
           <Box
@@ -137,7 +137,7 @@ const InstagramBox: React.FC = () => {
               @santorins
             </Link>
           </Box>
-        </Grid2>
+        </Grid>
       </Box>
     </>
   );

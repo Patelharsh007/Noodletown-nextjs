@@ -1,4 +1,4 @@
-import { Box, Grid as Grid2, Skeleton, Typography } from "@mui/material";
+import { Box, Grid, Skeleton, Typography } from "@mui/material";
 
 const LoadingFoodByWeather = () => (
   <Box
@@ -18,13 +18,13 @@ const LoadingFoodByWeather = () => (
       Food according to Weather
     </Typography>
 
-    <Grid2
+    <Grid
       container
       spacing={{ xs: "20px", sm: "40px", md: "50px" }}
       marginY={"50px"}
     >
       {Array.from({ length: 6 }).map((_, index) => (
-        <Grid2 key={index} size={{ xs: 6, sm: 4 }}>
+        <Grid key={index} size={{ xs: 6, sm: 4 }}>
           <Skeleton
             variant="rectangular"
             width="100%"
@@ -44,9 +44,9 @@ const LoadingFoodByWeather = () => (
           />
 
           <Skeleton variant="text" animation="wave" width="80%" height={20} />
-        </Grid2>
+        </Grid>
       ))}
-    </Grid2>
+    </Grid>
   </Box>
 );
 
