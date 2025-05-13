@@ -1,24 +1,24 @@
 "use client";
+
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import ProductDescription from "@/components/product/ProductDescription";
 import { fetchMealDetailById } from "@/lib/fetchers/datafetching";
 import ProductSkeleton from "@/skeleton/ProductSkeleton";
-import { Container, Typography, Box, Grid } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 
-export default function ProductPage({
-  params,
-}: {
-  params: { productId: string };
-}) {
-  const { productId } = params;
+interface productDetailProp {
+  id: string;
+}
 
+const Product: React.FC<productDetailProp> = ({ id }) => {
   const {
     data: meal,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["mealDetails", productId],
-    queryFn: () => fetchMealDetailById(productId),
+    queryKey: ["mealDetails", id],
+    queryFn: () => fetchMealDetailById(id),
   });
 
   if (error) {
@@ -69,4 +69,6 @@ export default function ProductPage({
       </Grid>
     </Box>
   );
-}
+};
+
+export default Product;
