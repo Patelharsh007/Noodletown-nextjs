@@ -1,4 +1,4 @@
-import RestaurantBanner from "@/section/Restaurant/RestaurantBanner";
+import RestaurantOrderOnline from "@/section/restaurant/RestaurantOrderOnline";
 
 export default async function RestaurantPage({
   params,
@@ -9,7 +9,7 @@ export default async function RestaurantPage({
 
   return (
     <>
-      <RestaurantBanner restaurantId={restaurantId} />
+      <RestaurantOrderOnline id={restaurantId} />
     </>
   );
 }
