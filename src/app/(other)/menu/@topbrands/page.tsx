@@ -78,7 +78,7 @@ export default async function TopBrands() {
           ))
         ) : (
           <Typography variant="body1" color="red" textAlign="left">
-            {errorMessage}
+            No restauarnts available. The server may be experiencing issues.
           </Typography>
         )}
       </Box>

@@ -45,7 +45,7 @@ export default async function foodbyweather() {
           </Grid>
         ) : (
           <Typography variant="body1" color="red" textAlign="left">
-            {errorMessage}
+            No meals available. The server may be experiencing issues.
           </Typography>
         )}
       </Box>
