@@ -1,58 +1,42 @@
-"use client"; // This is a client-side component
-
+"use client";
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
-import ScrollerCard from "@/components/home/ScrollerCard";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { MealItem } from "@/types/type";
 import { getCarouselCategories, getCarouselItems } from "@/actions/home";
-import { MealItem } from "../../types/type";
+import CarosuelCategoriesSkeleton from "@/skeleton/CarosuelCategoriesSkeleton";
+import CarosuelItemsSkeleton from "@/skeleton/CarosuelItemsSkeleton";
+import ScrollerCard from "@/components/home/ScrollerCard";
 
 const ItemCarosuel: React.FC = () => {
-  const [categories, setCategories] = useState<string[]>([]);
-  const [filteredItems, setFilteredItems] = useState<MealItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
-  const [isLoadingItems, setIsLoadingItems] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    error,
+  } = useQuery({
+    queryKey: ["CarosuelCategories"],
+    queryFn: getCarouselCategories,
+    staleTime: 10 * 60 * 1000,
+  });
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categoriesData = await getCarouselCategories();
-        setCategories(categoriesData);
-        setSelectedCategory(categoriesData[0] || "");
-        setIsLoadingCategories(false);
-      } catch (err) {
-        setError("Failed to fetch categories.");
-        setIsLoadingCategories(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    if (selectedCategory) {
-      const fetchItems = async () => {
-        setIsLoadingItems(true);
-        try {
-          const itemsData = await getCarouselItems(selectedCategory);
-          setFilteredItems(itemsData);
-        } catch (err) {
-          setError("Failed to fetch items.");
-        } finally {
-          setIsLoadingItems(false);
-        }
-      };
-
-      fetchItems();
+    if (categories?.length > 0 && !selectedCategory) {
+      setSelectedCategory(categories[0]);
     }
-  }, [selectedCategory]);
+  }, [categories]);
+
+  const {
+    data: filteredItems,
+    isLoading: isLoadingItems,
+    error: error1,
+  } = useQuery({
+    queryKey: ["CarosuelItems", selectedCategory],
+    queryFn: () => getCarouselItems(selectedCategory),
+    enabled: !isLoadingCategories && !error && !!selectedCategory,
+    staleTime: 10 * 60 * 1000,
+  });
 
   return (
     <>
@@ -99,38 +83,49 @@ const ItemCarosuel: React.FC = () => {
         {error ? (
           <Container maxWidth="md" sx={{ marginTop: { xs: "40px" } }}>
             <Typography variant="body1" color="error" textAlign="center">
-              {error}
+              No data found. Please check your internet connection or try again
+              later.
             </Typography>
           </Container>
-        ) : isLoadingCategories ? (
-          <CircularProgress sx={{ display: "block", margin: "auto" }} />
         ) : (
-          categories.map((category: string) => (
-            <Button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              sx={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                cursor: "pointer",
-                border:
-                  selectedCategory === category
-                    ? "2px solid #F6B716"
-                    : "2px solid #ECEEF6",
-                borderRadius: "45px",
-                bgcolor: selectedCategory === category ? "#F6B716" : "#ECEEF6",
-                color: selectedCategory === category ? "white" : "inherit",
-                textTransform: "none",
-                "&:hover": {
-                  opacity: 0.8,
-                  bgcolor: "#f8c33d",
-                  border: "2px solid #f8c33d",
-                },
-              }}
-            >
-              {category}
-            </Button>
-          ))
+          <>
+            {isLoadingCategories ? (
+              <CarosuelCategoriesSkeleton />
+            ) : (
+              <>
+                {categories &&
+                  categories.map((category: string) => (
+                    <Button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      sx={{
+                        padding: "10px 20px",
+                        fontSize: "16px",
+                        cursor: "pointer",
+                        border:
+                          selectedCategory === category
+                            ? "2px solid #F6B716"
+                            : "2px solid #ECEEF6",
+                        borderRadius: "45px",
+                        bgcolor:
+                          selectedCategory === category ? "#F6B716" : "#ECEEF6",
+                        color:
+                          selectedCategory === category ? "white" : "inherit",
+                        textTransform: "none",
+
+                        "&:hover": {
+                          opacity: 0.8,
+                          bgcolor: "#f8c33d",
+                          border: "2px solid #f8c33d",
+                        },
+                      }}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+              </>
+            )}
+          </>
         )}
       </Box>
       <Box
@@ -183,22 +178,24 @@ const ItemCarosuel: React.FC = () => {
           }}
         >
           {isLoadingItems ? (
-            <CircularProgress sx={{ display: "block", margin: "auto" }} />
+            <CarosuelItemsSkeleton />
           ) : (
-            filteredItems?.map((item: MealItem) => (
-              <Box
-                key={item.id}
-                sx={{
-                  flex: "0 0 auto",
-                  transition: "transform 0.2s ease",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                  },
-                }}
-              >
-                <ScrollerCard Card={item} />
-              </Box>
-            ))
+            <>
+              {filteredItems?.map((item: MealItem) => (
+                <Box
+                  key={item.id}
+                  sx={{
+                    flex: "0 0 auto",
+                    transition: "transform 0.2s ease",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                    },
+                  }}
+                >
+                  <ScrollerCard Card={item} />
+                </Box>
+              ))}
+            </>
           )}
         </Box>
       </Box>
