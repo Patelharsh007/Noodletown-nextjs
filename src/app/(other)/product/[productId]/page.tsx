@@ -1,35 +1,26 @@
-"use client";
+import { getProduct } from "@/actions/restuarant";
 import ProductDescription from "@/components/product/ProductDescription";
 import { fetchMealDetailById } from "@/lib/fetchers/datafetching";
 import ProductSkeleton from "@/skeleton/ProductSkeleton";
+import { MealItem } from "@/types/type";
 import { Container, Typography, Box, Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
   params: { productId: string };
 }) {
-  const { productId } = params;
+  const { productId } = await params;
 
-  const {
-    data: meal,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["mealDetails", productId],
-    queryFn: () => fetchMealDetailById(productId),
-  });
+  let meal: MealItem | null = null;
+  let errorMessage: string | null = null;
 
-  if (error) {
-    return (
-      <Container maxWidth="md" sx={{ marginTop: { xs: "40px" } }}>
-        <Typography variant="body1" color="error" textAlign="center">
-          No data found. Please check your internet connection or try again
-          later.
-        </Typography>
-      </Container>
-    );
+  try {
+    meal = await getProduct(productId);
+  } catch (error) {
+    // console.error("BestMeals fetch error:", error);
+    errorMessage = "Unable to load meal details. Please try again later.";
   }
 
   return (
@@ -40,9 +31,7 @@ export default function ProductPage({
       marginY={{ xs: "30px", md: "50px" }}
     >
       <Grid container spacing={{ xs: 3, md: 4 }} alignItems="flex-start">
-        {isLoading ? (
-          <ProductSkeleton />
-        ) : (
+        {meal ? (
           <>
             <Grid size={{ sm: 12, md: 5 }}>
               <Box
@@ -58,13 +47,12 @@ export default function ProductPage({
                 }}
               />
             </Grid>
-
-            {meal ? (
-              <ProductDescription meal={meal} />
-            ) : (
-              <>Something went wrong</>
-            )}
+            <ProductDescription meal={meal} />
           </>
+        ) : (
+          <Typography variant="body1" color="red" textAlign="left">
+            No meals details available. The server may be experiencing issues.
+          </Typography>
         )}
       </Grid>
     </Box>
