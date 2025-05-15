@@ -3,6 +3,7 @@ import "./globals.css";
 import { Poppins, Inter } from "next/font/google";
 import ReactQueryProvider from "@/lib/utils/ReactQueryProvider";
 import ReduxProvider from "@/lib/utils/ReduxProvider";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +33,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} ${inter.variable} antialiased`}>
         <ReduxProvider>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            {children}
+            <ToastContainer />
+          </ReactQueryProvider>
         </ReduxProvider>
       </body>
     </html>

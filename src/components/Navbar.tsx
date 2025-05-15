@@ -1,12 +1,13 @@
+"use client";
 import Typography from "@mui/material/Typography";
 import FaceIcon from "@mui/icons-material/Face";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Link from "next/link";
 import { Badge, Stack, Box } from "@mui/material";
-// import useCart from "../hooks/useCartMeal";
+import useCart from "@/hooks/useCartMeal";
 
 const Navbar: React.FC<NavbarProps> = ({ linkColor }) => {
-  // const { cart } = useCart();
+  const { cart } = useCart();
 
   return (
     <>
@@ -87,10 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ linkColor }) => {
                 }}
               >
                 <Badge
-                  badgeContent={
-                    6
-                    // cart && cart.length
-                  }
+                  badgeContent={cart && cart.length}
                   sx={{
                     "& .MuiBadge-badge": {
                       backgroundColor: "#ffc300",

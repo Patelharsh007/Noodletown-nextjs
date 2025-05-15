@@ -1,10 +1,7 @@
 import { getProduct } from "@/actions/restuarant";
 import ProductDescription from "@/components/product/ProductDescription";
-import { fetchMealDetailById } from "@/lib/fetchers/datafetching";
-import ProductSkeleton from "@/skeleton/ProductSkeleton";
 import { MealItem } from "@/types/type";
-import { Container, Typography, Box, Grid } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { Typography, Box, Grid } from "@mui/material";
 
 export default async function ProductPage({
   params,

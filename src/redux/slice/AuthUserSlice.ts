@@ -14,7 +14,7 @@ const loadAuthUserFromLocalStorage = (): AuthUserItem => {
     }
   }
   return {
-    id: 0,
+    id: null,
     userName: "",
     email: "",
     profileImage: "",

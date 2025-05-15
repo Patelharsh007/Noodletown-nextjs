@@ -25,3 +25,32 @@ interface DiningOutCardProps {
 interface BestDelieveredBoxProps {
   box: { id: string; imageurl: string; title: string };
 }
+
+// -------------------------------menu------------------------
+interface topBrandUiProp {
+  restaurant: { id: string; title: string; logo: string };
+}
+
+interface topBrandRestaurant {
+  id: string;
+  title: string;
+  logo: string;
+}
+
+interface foodCategoryGroupProp {
+  Card: {
+    groupName: string;
+    groupDetails: string;
+    groupImage: string;
+  };
+}
+
+interface foodByCategoryGroup {
+  groupName: string;
+  groupDetails: string;
+  groupImage: string;
+}
+
+// -------------------------------Restaurant------------------------
+
+// -------------------------------Product------------------------

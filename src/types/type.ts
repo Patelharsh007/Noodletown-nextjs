@@ -37,7 +37,7 @@ export interface User {
 
 export interface AuthUserItem {
   isAuthenticated: boolean;
-  id: number;
+  id: number | null;
   email: string;
   userName: string;
   profileImage: string;
@@ -107,4 +107,10 @@ export enum PaymentStatus {
   PENDING = "pending",
   COMPLETED = "completed",
   FAILED = "failed",
+}
+
+export interface CartResponse {
+  status: "success" | "error";
+  message: string;
+  cartItem?: any[];
 }

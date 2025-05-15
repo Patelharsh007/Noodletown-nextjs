@@ -38,7 +38,7 @@ export const fetchRestaurant = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/restaurant/${id}`, {
       cache: "force-cache",
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(10000),
     });
 
     if (!res.ok) {
